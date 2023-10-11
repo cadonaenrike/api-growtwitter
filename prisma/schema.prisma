@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Like {
+  id_like    String @id @db.Uuid
+  id_usuario String  @db.Uuid
+  id_tweet   String  @db.Uuid
+  Tweet      Tweet   @relation(fields: [id_tweet], references: [id_tweet], onDelete: NoAction, onUpdate: NoAction)
+  Usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Retweet {
+  id_retweet String @id @map("id_retweet") @db.Uuid
+  id_tweet   String @map("id_tweet") @db.Uuid
+  id_usuario String @map("id_usuario") @db.Uuid
+  conteudo   String? @map("conteudo") @db.VarChar
+  Tweet      Tweet   @relation(fields: [id_tweet], references: [id_tweet], onDelete: NoAction, onUpdate: NoAction)
+  Usuario    Usuario @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction)
+}
+
+
+model Seguidor {
+  id_usuario_segue                             String  @db.Uuid
+  id_usuario_seguido                           String  @db.Uuid
+  seguindo    Usuario @relation("Seguidor_id_usuario_segueToUsuario", fields: [id_usuario_segue], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction)
+  seguidores Usuario @relation("Seguidor_id_usuario_seguidoToUsuario", fields: [id_usuario_seguido], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_usuario_segue, id_usuario_seguido], name: "segue_pkey")
+}
+
+model Tweet {
+  id_tweet   String    @id @db.Uuid
+  id_usuario String    @db.Uuid
+  conteudo   String    @map("conteudo") @db.VarChar
+  Like       Like[]
+  Retweet    Retweet[]
+  Usuario    Usuario   @relation(fields: [id_usuario], references: [id_usuario], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Usuario {
+  id_usuario                                    String     @id @db.Uuid
+  nome                                          String     @db.VarChar
+  email                                         String     @db.VarChar
+  username                                      String     @unique @db.VarChar
+  senha                                         String     @db.VarChar
+  token                                         String?    @unique
+  Like                                          Like[]
+  Retweet                                       Retweet[]
+  seguindo   Seguidor[] @relation("Seguidor_id_usuario_segueToUsuario")
+  seguidores Seguidor[] @relation("Seguidor_id_usuario_seguidoToUsuario")
+  Tweet                                         Tweet[]
+
+  @@map("usuario")
+}
