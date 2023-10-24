@@ -62,7 +62,6 @@ class UsuarioService {
       data.senha
     );
 
-    // Verifica se o username já existe no banco de dados
     const verificaUsername = await repository.usuario.findUnique({
       where: {
         username: data.username,
@@ -75,16 +74,14 @@ class UsuarioService {
         message: "Usuário já existe!",
       };
     } else {
-      // Crie um hash seguro da senha antes de armazená-la no banco de dados
-      const senhaHash = await bcrypt.hash(data.senha, 10); // 10 salt rounds
+      const senhaHash = await bcrypt.hash(data.senha, 10);
 
-      // Crie o usuário no banco de dados com a senha hashada
       const criaUsuario = await repository.usuario.create({
         data: {
           nome: usuario.nome,
           email: usuario.email,
           username: usuario.username,
-          senha: senhaHash, // Armazene o hash da senha, não a senha original
+          senha: senhaHash,
           id_usuario: usuario.id,
         },
       });
@@ -122,7 +119,6 @@ class UsuarioService {
   }
 
   public async update(data: AtualizaUsuarioDto): Promise<ResponseDto> {
-    // 1 - verificar se o usuario existe
     const usuario = await repository.usuario.findUnique({
       where: {
         id_usuario: data.id_usuario,
@@ -135,10 +131,9 @@ class UsuarioService {
         message: "Usuario não Encontrado",
       };
     }
-    // 2 - atualizar o usuario
 
-    const senhaHash = await bcrypt.hash(data.senha, 10); // 10 salt rounds
-    // Crie um hash seguro da senha antes de armazená-la no banco de dados
+    const senhaHash = await bcrypt.hash(data.senha, 10);
+
     const atualizaUsuario = await repository.usuario.update({
       where: {
         id_usuario: data.id_usuario,

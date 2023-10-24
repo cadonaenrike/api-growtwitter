@@ -15,9 +15,9 @@ app.use(cors());
 app.use("/usuario", UsuarioRoutes());
 app.use("/auth", authRoutes());
 app.use("/twitter", TweetRoutes());
-app.use("/seguidor", SeguidorRoutes()); //isso e pra voce nunca esquecer o quanto voce foi idiota nisso!!!
-app.use("/like", LikeRoutes()); //isso e pra voce nunca esquecer o quanto voce foi idiota nisso!!!
-app.use("/retweet", RetweetRoutes()); //isso e pra voce nunca esquecer o quanto voce foi idiota nisso!!!
+app.use("/seguidor", SeguidorRoutes());
+app.use("/like", LikeRoutes());
+app.use("/retweet", RetweetRoutes());
 app.listen(3333, () => {
   console.log("API está rodando na porta 3333");
 });

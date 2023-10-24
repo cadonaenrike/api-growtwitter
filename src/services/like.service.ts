@@ -1,6 +1,6 @@
 import repository from "../database/prisma.database";
 import { ResponseDto } from "../dtos/response.dto";
-import { Like } from "../models/like.model"; // Certifique-se de importar a classe correta do modelo Like
+import { Like } from "../models/like.model";
 
 class LikeService {
   public async listAll(): Promise<ResponseDto> {

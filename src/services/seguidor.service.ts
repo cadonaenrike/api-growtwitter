@@ -8,12 +8,12 @@ class SeguidorService {
       include: {
         seguindo: {
           include: {
-            seguindo: true, // Inclui os usuários seguidos pelos seguidores
+            seguindo: true,
           },
         },
         seguidores: {
           include: {
-            seguidores: true, // Inclui os seguidores dos usuários seguidos
+            seguidores: true,
           },
         },
       },

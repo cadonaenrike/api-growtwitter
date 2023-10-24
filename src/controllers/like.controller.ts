@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import likeService from "../services/like.service"; // Certifique-se de importar o serviço correto
-import { Like } from "../models/like.model"; // Certifique-se de importar o modelo correto
+import likeService from "../services/like.service";
+import { Like } from "../models/like.model";
 
 export class LikeController {
   public async listAll(req: Request, res: Response) {

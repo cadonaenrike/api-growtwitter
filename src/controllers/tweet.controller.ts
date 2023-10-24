@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import tweetService from "../services/tweet.service";
-import { CriaTweetDto, AtualizaTweetDto } from "../dtos/tweet.dto";
 
 export class TweetController {
   public async listAll(req: Request, res: Response) {

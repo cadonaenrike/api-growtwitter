@@ -19,7 +19,7 @@ class AuthController {
     const response: ResponseDto = {
       code: 200,
       message: "Login efetuado com Sucesso!",
-      data: { token: token },
+      data: { token: token, usuario: usuario.id_usuario },
     };
 
     if (update.code === 200) {
