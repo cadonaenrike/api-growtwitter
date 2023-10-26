@@ -3,7 +3,8 @@ import tweetService from "../services/tweet.service";
 
 export class TweetController {
   public async listAll(req: Request, res: Response) {
-    const result = await tweetService.listAll();
+    const { usuario_id } = req.query;
+    const result = await tweetService.listAll(usuario_id);
     return res.status(result.code).send(result);
   }
 
