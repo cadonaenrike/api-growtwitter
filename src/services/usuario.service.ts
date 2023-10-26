@@ -1,3 +1,4 @@
+import { Console } from "console";
 import repository from "../database/prisma.database";
 import { ResponseDto } from "../dtos/response.dto";
 import { AtualizaUsuarioDto, CriaUsuarioDto } from "../dtos/usuario.dto";
@@ -27,6 +28,29 @@ class UsuarioService {
       code: 200,
       message: "Usuarios listados com sucesso",
       data,
+    };
+  }
+  public async listandoPorId(id_usuario: any): Promise<ResponseDto> {
+    const data = await repository.usuario.findUnique({
+      where: { id_usuario: id_usuario.id_usuario },
+      include: {
+        Tweet: true,
+        seguidores: {
+          include: {
+            seguidores: true,
+          },
+        },
+        seguindo: {
+          include: {
+            seguindo: true,
+          },
+        },
+      },
+    });
+    return {
+      code: 200,
+      message: "Usuarios listados com sucesso",
+      data: data,
     };
   }
 

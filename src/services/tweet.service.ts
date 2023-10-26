@@ -4,7 +4,7 @@ import { CriaTweetDto, AtualizaTweetDto } from "../dtos/tweet.dto";
 import { Tweet } from "../models/tweet.model";
 
 class TweetService {
-  public async listAll(id_usuario?: any): Promise<ResponseDto> {
+  public async listAll(id_usuario?: string): Promise<ResponseDto> {
     if (!id_usuario) {
       const data = await repository.tweet.findMany({
         include: {

@@ -7,6 +7,11 @@ export class UsuarioController {
 
     return res.status(result.code).send(result);
   }
+  public async listById(req: Request, res: Response) {
+    const id_usuario = req.headers;
+    const result = await usuarioService.listandoPorId(id_usuario);
+    return res.status(result.code).send(result);
+  }
 
   public async create(req: Request, res: Response) {
     try {

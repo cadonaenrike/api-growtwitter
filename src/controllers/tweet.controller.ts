@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import tweetService from "../services/tweet.service";
+import { stringify } from "uuid";
 
 export class TweetController {
   public async listAll(req: Request, res: Response) {
     const { usuario_id } = req.query;
-    const result = await tweetService.listAll(usuario_id);
+    const usuarioIdString: string = usuario_id as string;
+    const result = await tweetService.listAll(usuarioIdString);
     return res.status(result.code).send(result);
   }
 
