@@ -4,19 +4,35 @@ import { CriaTweetDto, AtualizaTweetDto } from "../dtos/tweet.dto";
 import { Tweet } from "../models/tweet.model";
 
 class TweetService {
-  public async listAll(): Promise<ResponseDto> {
-    const data = await repository.tweet.findMany({
-      include: {
-        Like: true,
-        Retweet: true,
-      },
-    });
+  public async listAll(id_usuario?: string): Promise<ResponseDto> {
+    if (!id_usuario) {
+      const data = await repository.tweet.findMany({
+        include: {
+          Like: true,
+          Retweet: true,
+        },
+      });
 
-    return {
-      code: 200,
-      message: "Tweets listados com sucesso",
-      data,
-    };
+      return {
+        code: 200,
+        message: "Tweets listados com sucesso",
+        data,
+      };
+    } else {
+      const data = await repository.tweet.findMany({
+        where: { id_usuario },
+        include: {
+          Like: true,
+          Retweet: true,
+        },
+      });
+
+      return {
+        code: 200,
+        message: "Tweets do Usuario listados com sucesso",
+        data,
+      };
+    }
   }
 
   public async create(data: CriaTweetDto) {
