@@ -23,7 +23,7 @@ async function validaTokenMiddleware(
         message: "Falha na autenticação de Token! (Token Invalido) ",
       });
     }
-
+    req.body.id_usuario = user.id_usuario;
     next();
   } catch (error) {
     return res.status(500).send({

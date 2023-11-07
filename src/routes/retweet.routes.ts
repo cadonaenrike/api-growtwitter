@@ -8,6 +8,12 @@ export const RetweetRoutes = () => {
 
   // Listar todos os retweets
   router.get("/", validaTokenMiddleware, retweetController.listAll);
+  // Listar por IdTwitter
+  router.get(
+    "/:id_tweet",
+    validaTokenMiddleware,
+    retweetController.listByIdTwitter
+  );
 
   // Criar um novo retweet
   router.post("/", validaTokenMiddleware, retweetController.create);

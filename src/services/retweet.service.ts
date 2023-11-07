@@ -1,7 +1,9 @@
 import repository from "../database/prisma.database";
 import { ResponseDto } from "../dtos/response.dto";
 import { CriaRetweetDto, AtualizaRetweetDto } from "../dtos/retweet.dto";
+import { TweetDto } from "../dtos/tweet.dto";
 import { Retweet } from "../models/retweet.model";
+import { Tweet } from "../models/tweet.model";
 
 class RetweetService {
   public async listAll(): Promise<ResponseDto> {
@@ -16,11 +18,26 @@ class RetweetService {
       data,
     };
   }
+  public async listByIdTwitte(tweet: string): Promise<ResponseDto> {
+    const data = await repository.retweet.findMany({
+      where: {
+        id_tweet: tweet,
+      },
+      include: {
+        Usuario: true,
+      },
+    });
+    return {
+      code: 200,
+      message: "Retweets listados com sucesso",
+      data,
+    };
+  }
 
   public async create(data: CriaRetweetDto) {
     const retweet = new Retweet(
       data.id_tweet,
-      data.id_usuario,
+      data.id_usuario!,
       data.conteudo || ""
     );
 

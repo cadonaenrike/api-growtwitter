@@ -1,6 +1,6 @@
 export interface CriaRetweetDto {
   id_tweet: string;
-  id_usuario: string;
+  id_usuario?: string;
   conteudo?: string;
 }
 

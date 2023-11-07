@@ -2,17 +2,40 @@ import { Request, Response } from "express";
 import RetweetService from "../services/retweet.service";
 import { CriaRetweetDto, AtualizaRetweetDto } from "../dtos/retweet.dto";
 import retweetService from "../services/retweet.service";
+import { TweetDto } from "../dtos/tweet.dto";
 
 export class RetweetController {
   public async listAll(req: Request, res: Response) {
     const result = await retweetService.listAll();
     return res.status(result.code).send(result);
   }
+  public async listByIdTwitter(req: Request, res: Response) {
+    try {
+      const response = await RetweetService.listByIdTwitte(req.params.id_tweet);
+      return res.status(201).json({
+        ok: true,
+        message: "Retweet encontrado com sucesso!",
+        data: response,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        ok: false,
+        message: "Erro ao encontrar o Tweet",
+        data: null,
+      });
+    }
+  }
 
   public async create(req: Request, res: Response) {
     try {
       const data: CriaRetweetDto = req.body;
-      const response = await RetweetService.create(data);
+      console.log(data);
+      const response = await RetweetService.create({
+        id_tweet: data.id_tweet,
+        id_usuario: req.body.id_usuario,
+        conteudo: data.conteudo,
+      });
       return res.status(201).json({
         ok: true,
         message: "Retweet criado com sucesso!",
